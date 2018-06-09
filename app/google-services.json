@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "387983492074",
+    "firebase_url": "https://trackingsystem-b83dd.firebaseio.com",
+    "project_id": "trackingsystem-b83dd",
+    "storage_bucket": "trackingsystem-b83dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387983492074:android:32f82ac2d0ec5f5b",
+        "android_client_info": {
+          "package_name": "com.maps.att.traskingsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387983492074-1ur4k5vd9dtdm7uh4du88or1d6eooj2d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.maps.att.traskingsystem",
+            "certificate_hash": "fe3a4e0a19a788ebc85612a7e6085c6cdb92b78a"
+          }
+        },
+        {
+          "client_id": "387983492074-im710b8haflfuc2iag299hm0u9plbv3j.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "387983492074-im710b8haflfuc2iag299hm0u9plbv3j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5qU88-MOj7dDqGhMmN6or42RPzg6oeV0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387983492074-im710b8haflfuc2iag299hm0u9plbv3j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
