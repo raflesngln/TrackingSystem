@@ -67,11 +67,11 @@ public class MapsRefresh extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onLocationChanged(Location location) {
                 Log.d("My Location is =====> ", location.toString());
-//                LatLng posisi=new LatLng(location.getAltitude(),location.getLongitude());
-//                mMap.addMarker(new MarkerOptions().position(posisi).title("Marker in Sydney"));
-//                mMap.moveCamera(CameraUpdateFactory.newLatLng(posisi));
+                mMap.clear();
+                LatLng posisi=new LatLng(location.getAltitude(),location.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(posisi).title("My location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posisi,5));
                 Toast.makeText(MapsRefresh.this, "posisi adalah  "+location.getAltitude()+" dan "+location.getLongitude(), Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
@@ -90,7 +90,7 @@ public class MapsRefresh extends FragmentActivity implements OnMapReadyCallback,
             }
         };
         if(Build.VERSION.SDK_INT < 23){
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,1,locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
         } else
         {
             if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
@@ -100,13 +100,13 @@ public class MapsRefresh extends FragmentActivity implements OnMapReadyCallback,
             } else
             {
                 //we have granted permission
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,1,locationListener);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
             }
         }
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//        LatLng sydney = new LatLng(-34, 151);
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
 
@@ -118,7 +118,7 @@ public class MapsRefresh extends FragmentActivity implements OnMapReadyCallback,
         if(grantResults.length >0 && grantResults[0]== PackageManager.PERMISSION_GRANTED)
         {
             if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED)
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,1,locationListener);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
         }
     }
 
