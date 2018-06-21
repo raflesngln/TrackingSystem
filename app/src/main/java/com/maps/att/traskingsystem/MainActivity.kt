@@ -1,5 +1,6 @@
 package com.maps.att.traskingsystem
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -9,6 +10,9 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import com.firebase.ui.auth.AuthUI
+import com.maps.att.traskingsystem.ApiMaps.ListOnline
 import com.maps.att.traskingsystem.maps.LocationUpdate
 import com.maps.att.traskingsystem.maps.Main2Activity
 import com.maps.att.traskingsystem.maps.MapsActivity
@@ -16,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private val LOGIN_PERMISSION = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +38,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        //langsung ke list or login
+        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAllowNewEmailAccounts(true).build(), LOGIN_PERMISSION)
     }
 
     override fun onBackPressed() {
@@ -65,8 +73,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_camera -> {
                 startActivity(Intent(this@MainActivity, Main2Activity::class.java))
             }
-            R.id.nav_gallery -> {
-                startActivity(Intent(this@MainActivity, Main2Activity::class.java))
+            R.id.nav_maps_tracking -> {
+                startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAllowNewEmailAccounts(true).build(), LOGIN_PERMISSION)
+//                startActivity(Intent(this@MainActivity, LoginFirebaseActivity::class.java))
             }
             R.id.nav_slideshow -> {
                 startActivity(Intent(this@MainActivity, Main2Activity::class.java))
@@ -85,4 +94,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        if (requestCode == LOGIN_PERMISSION) {
+            startNewActivity(resultCode, data)
+        }
+    }
+
+    private fun startNewActivity(resultCode: Int, data: Intent) {
+        if (resultCode == Activity.RESULT_OK) {
+            val intent = Intent(this@MainActivity, ListOnline::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            Toast.makeText(this@MainActivity, "Login false", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }

@@ -112,7 +112,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for(Marker m:markerlist)
         {
-            LatLng latlng=new LatLng(-m.getPosition().latitude,m.getPosition().longitude);
+            LatLng latlng=new LatLng(m.getPosition().latitude,m.getPosition().longitude);
             mMap.addMarker(new MarkerOptions().position(latlng).title(m.getTitle()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
         }

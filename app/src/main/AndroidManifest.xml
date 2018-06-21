@@ -48,6 +48,26 @@
         <activity
             android:name=".maps.MapsRefresh"
             android:label="@string/title_activity_maps_refresh"></activity>
+
+        //copyan dari attgroup
+        <activity
+            android:name=".ApiMaps.MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".ApiMaps.LoginFirebaseActivity" />
+        <activity
+            android:name=".ApiMaps.ListOnline"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ApiMaps.MapTracking"
+            android:label="@string/title_activity_map_tracking" />
+        <activity
+            android:name=".ApiMaps.MapsCoba"
+            android:label="@string/title_activity_maps_coba"></activity>
+
+        <service android:name=".ApiMaps.ServiceMapsUpdate" />
+
     </application>
+
+
 
 </manifest>
