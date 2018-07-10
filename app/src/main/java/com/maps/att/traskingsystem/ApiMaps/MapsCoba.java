@@ -113,7 +113,7 @@ public class MapsCoba extends FragmentActivity implements OnMapReadyCallback,
             lat=getIntent().getDoubleExtra("lat",0);
             lng=getIntent().getDoubleExtra("lng",0);
 
-            Toast.makeText(this, "hai"+email+lat+"==="+lng, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "hai"+email+lat+"==="+lng, Toast.LENGTH_SHORT).show();
         }
         //for dialog searching
         txt_search=(TextView) findViewById(R.id.txt_search);
@@ -144,7 +144,8 @@ public class MapsCoba extends FragmentActivity implements OnMapReadyCallback,
         gotoCurrent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadLocationForThisUser(email);
+                trackingChangesLatLng(email);
+
             }
         });
         /////////for auto refresh
@@ -170,7 +171,7 @@ public class MapsCoba extends FragmentActivity implements OnMapReadyCallback,
                 createLocationRequest();
                 displayLocation();
             }
-            Toast.makeText(MapsCoba.this,"Permission granted to user",Toast.LENGTH_LONG).show();
+//            Toast.makeText(MapsCoba.this,"Permission granted to user",Toast.LENGTH_LONG).show();
         }
 
 //        setupSystem();
@@ -178,8 +179,8 @@ public class MapsCoba extends FragmentActivity implements OnMapReadyCallback,
         getAddressDetail();
     }
 
-    //tracking changes database longitude
-    private void loadLocationForThisUser(final String email) {
+    //tracking of changes longitude from database firebase
+    private void trackingChangesLatLng(final String email) {
         Query user_location=dbuserlist.orderByKey();
         user_location.addValueEventListener(new ValueEventListener() {
             @Override
@@ -243,15 +244,30 @@ public class MapsCoba extends FragmentActivity implements OnMapReadyCallback,
 
         //create marker for current user
         LatLng lokasi=new LatLng(lat,lng);
-        //                mMap.addMarker(new MarkerOptions().position(current).title(FirebaseAuth.getInstance().getCurrentUser().getEmail()));
-        mMap.addMarker(new MarkerOptions()
-                .position(lokasi)
-                .title( "My Current Location ")
-                .snippet(FirebaseAuth.getInstance().getCurrentUser().getEmail())
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(lokasi));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom((lokasi), 18.0f));
-        Log.d("current location is => " ,lat+" and "+lng);
+
+        geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            addresses = geocoder.getFromLocation(lat, lng, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            String city = addresses.get(0).getLocality();
+            TextView txt_search=(TextView) findViewById(R.id.txt_search);
+            txt_search.setText(address);
+
+            // mMap.addMarker(new MarkerOptions().position(current).title(FirebaseAuth.getInstance().getCurrentUser().getEmail()));
+            mMap.addMarker(new MarkerOptions()
+                    .position(lokasi)
+                    .title( "My Current Location ")
+                    .snippet(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(lokasi));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom((lokasi), 18.0f));
+            getAddressDetail();
+            Log.d("current location is => " ,lat+" and "+lng);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -295,7 +311,7 @@ public class MapsCoba extends FragmentActivity implements OnMapReadyCallback,
         mMap.setBuildingsEnabled(true);
         mMap.setMyLocationEnabled(true);
 //        mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        loadLocationForThisUser(email);
+        trackingChangesLatLng(email);
 
         // for circle area current location,use style from folder raw/map.json
         try{
@@ -350,7 +366,7 @@ public class MapsCoba extends FragmentActivity implements OnMapReadyCallback,
             Log.d("from maps",mLastLocation.getLatitude()+" dan "+ mLastLocation.getLongitude());
 //            Toast.makeText(this, "Save maps location "+mLastLocation.getLatitude()+" dan "+ mLastLocation.getLongitude() , Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this,"No",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"",Toast.LENGTH_SHORT).show();
         }
 
     }

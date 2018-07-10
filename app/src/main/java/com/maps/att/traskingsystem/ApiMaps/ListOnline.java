@@ -42,7 +42,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.maps.att.traskingsystem.MainActivity;
 import com.maps.att.traskingsystem.R;
 
-public class ListOnline extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class ListOnline extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
     //firebase
     DatabaseReference onlineRef,currentUserRef,counterRef,locations;
     FirebaseRecyclerAdapter<User,ListOnlineViewHolder> adapter;
@@ -105,7 +107,7 @@ public class ListOnline extends AppCompatActivity implements GoogleApiClient.Con
                 createLocationRequest();
                 displayLocation();
             }
-            Toast.makeText(ListOnline.this,"Permission granted to user",Toast.LENGTH_LONG).show();
+//            Toast.makeText(ListOnline.this,"Permission granted to user",Toast.LENGTH_LONG).show();
         }
 
         setupSystem();
@@ -152,7 +154,7 @@ public class ListOnline extends AppCompatActivity implements GoogleApiClient.Con
             Log.d("longitude ==>",mLastLocation.getLatitude()+" dan "+ mLastLocation.getLongitude());
 //            Toast.makeText(this, "Save my new location "+mLastLocation.getLatitude()+" dan "+ mLastLocation.getLongitude() , Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this,"No",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this,"No",Toast.LENGTH_SHORT).show();
         }
 
     }
